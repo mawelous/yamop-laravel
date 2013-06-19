@@ -1,0 +1,23 @@
+{
+    "name": "mawelous/yamop-laravel",
+    "type": "library",    
+    "description": "Yet another MongoDB ODM for PHP as Laravel Component. Nothing unnecessary, with easy joins.",
+    "keywords": ["laravel", "mongo", "mongodb", "odm", "php", "object document mapper"],    
+    "homepage": "https://github.com/mawelous/yamop-laravel",    
+    "authors": [
+        {
+            "name": "Kamil Zieliński",
+            "email": "kamilz@mawelous.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "mawelous/yamop": "dev-master",
+    },
+    "autoload": {
+        "psr-0": {
+            "Mawelous\\YamopLaravel": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
