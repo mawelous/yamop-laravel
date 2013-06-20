@@ -5,6 +5,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Pagination](#pagination)
 - [Authentication](#authentication)
 - [Issues](#Issues)
 - [License](#license)
@@ -83,7 +84,24 @@ That's it!
 
 <a name="usage"></a>
 ## Usage
-For usage examples and further explanation take a look at the [Yamop Documentation](https://github.com/mawelous/yamop#usage).
+For usage examples and further explanation take a look at the [Yamop Documentation](https://github.com/mawelous/yamop#usage). Remember that you can use aliases for `Mapper` and `Model` which were registered during instalation.
+
+<a name="pagination"></a>
+## Pagination
+
+Yamop for Laravel supports pagination out of the box. I implemented `_createPaginator` method and extended `getPaginator` so now you need to pass only one param which is items per page. Second param which is current page number is optional. 
+
+```php
+    User::getMapper()
+        ->find( 'status' => array ( '$ne' => User::STATUS_DELETED )) )
+        ->sort( array( $field => $direction ) )
+        ->getPaginator( $perPage );
+        
+    //or
+    User::getMapper()
+        ->find()
+        ->getPaginator( $perPage, $currentPage );
+```
 
 <a name="authentication"></a>
 ## Authentication
