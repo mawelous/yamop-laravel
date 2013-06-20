@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Yamop for Laravel 4 : Yet another MongoDB ODM for PHP as Laravel Component" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
 
-    <title>Yamop for Laravel 4</title>
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Yamop for Laravel 4 by mawelous</title>
   </head>
 
   <body>
+    <a id="forkme_banner" href="https://github.com/mawelous/yamop-laravel">View on GitHub</a>
+    <div class="shell">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/mawelous/yamop-laravel">View on GitHub</a>
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Yamop for Laravel 4</h1>
+            <h2>Yet another MongoDB ODM for PHP as Laravel Component</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
 
-          <h1 id="project_title">Yamop for Laravel 4</h1>
-          <h2 id="project_tagline">Yet another MongoDB ODM for PHP as Laravel Component</h2>
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/mawelous/yamop-laravel/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/mawelous/yamop-laravel/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/mawelous/yamop-laravel/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/mawelous/yamop-laravel/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
         <ul>
 <li><a href="#whatsthat">What's that?</a></li>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#pagination">Pagination</a></li>
 <li><a href="#authentication">Authentication</a></li>
 <li><a href="#Issues">Issues</a></li>
 <li><a href="#license">License</a></li>
@@ -120,7 +136,25 @@ This version for Laravel is based on <a href="https://github.com/mawelous/yamop"
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>For usage examples and further explanation take a look at the <a href="https://github.com/mawelous/yamop#usage">Yamop Documentation</a>.</p>
+<p>For usage examples and further explanation take a look at the <a href="https://github.com/mawelous/yamop#usage">Yamop Documentation</a>. In this release for Laravel you can also use aliases for <code>Mapper</code> and <code>Model</code> which were registered during installation. See the following pagination example.</p>
+
+<p><a name="pagination"></a></p>
+
+<h2>
+<a name="pagination" class="anchor" href="#pagination"><span class="octicon octicon-link"></span></a>Pagination</h2>
+
+<p>Yamop for Laravel supports pagination out of the box. Yamop implements the <code>_createPaginator</code> method and extends <code>getPaginator</code>, with this you only need to pass the items per page into the method. The second parameter, the current page number, is optional.</p>
+
+<div class="highlight"><pre>    <span class="nx">User</span><span class="o">::</span><span class="na">getMapper</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span> <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="p">[</span> <span class="s1">'$ne'</span> <span class="o">=&gt;</span> <span class="nx">User</span><span class="o">::</span><span class="na">STATUS_DELETED</span> <span class="p">]</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">sort</span><span class="p">(</span> <span class="p">[</span> <span class="nv">$field</span> <span class="o">=&gt;</span> <span class="nv">$direction</span> <span class="p">]</span> <span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">getPaginator</span><span class="p">(</span> <span class="nv">$perPage</span> <span class="p">);</span>
+
+    <span class="c1">//or</span>
+    <span class="nx">User</span><span class="o">::</span><span class="na">getMapper</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">find</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">getPaginator</span><span class="p">(</span> <span class="nv">$perPage</span><span class="p">,</span> <span class="nv">$currentPage</span> <span class="p">);</span>
+</pre></div>
 
 <p><a name="authentication"></a></p>
 
@@ -178,17 +212,21 @@ You must first extend your <code>User</code> Model with Yamop's <code>Mawelous\Y
 
 <p>Yamop is free software distributed under the terms of the <a href="http://opensource.org/licenses/MIT">MIT license</a></p>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Yamop for Laravel 4 maintained by <a href="https://github.com/mawelous">mawelous</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/mawelous">mawelous</a> can be found on <a href="https://github.com/mawelous/yamop-laravel">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
       </footer>
+
     </div>
 
     
-
   </body>
 </html>
