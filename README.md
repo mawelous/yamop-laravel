@@ -84,19 +84,19 @@ That's it!
 
 <a name="usage"></a>
 ## Usage
-For usage examples and further explanation take a look at the [Yamop Documentation](https://github.com/mawelous/yamop#usage). Remember that you can use aliases for `Mapper` and `Model` which were registered during instalation.
+For usage examples and further explanation take a look at the [Yamop Documentation](https://github.com/mawelous/yamop#usage). In this release for Laravel you can also use aliases for `Mapper` and `Model` which were registered during installation. See the following pagination example.
 
 <a name="pagination"></a>
 ## Pagination
 
-Yamop for Laravel supports pagination out of the box. I implemented `_createPaginator` method and extended `getPaginator` so now you need to pass only one param which is items per page. Second param which is current page number is optional. 
+Yamop for Laravel supports pagination out of the box. Yamop implements the `_createPaginator` method and extends `getPaginator`, with this you only need to pass the items per page into the method. The second parameter, the current page number, is optional.
 
 ```php
     User::getMapper()
-        ->find( 'status' => array ( '$ne' => User::STATUS_DELETED )) )
-        ->sort( array( $field => $direction ) )
+        ->find( 'status' => [ '$ne' => User::STATUS_DELETED ] ) )
+        ->sort( [ $field => $direction ] )
         ->getPaginator( $perPage );
-        
+
     //or
     User::getMapper()
         ->find()
