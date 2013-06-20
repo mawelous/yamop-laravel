@@ -13,7 +13,7 @@
 ## What's that? 
 This is yet another, open source, and very simple [MongoDB](http://www.mongodb.org/) ODM for [Laravel 4](http://www.laravel.com/).
 It works like the standard MongoDB PHP extension interface but returns objects instead of arrays (as ODM). Queries stay the same.
-One of the coolest features are joins which allow you to query for related objects.
+One of its coolest features are joins which allow you to query for related objects.
 This version for Laravel is based on [Yamop](https://github.com/mawelous/yamop) which can be included into any PHP project. In addition to the standard features it supports Laravel based authentication.
 
 <a name="requirements"></a>
@@ -27,13 +27,13 @@ This version for Laravel is based on [Yamop](https://github.com/mawelous/yamop) 
 
 You can simply download it [here](https://github.com/mawelous/yamop-laravel) or use [Composer](http://getcomposer.org/).
 
-In the `require` key of `composer.json` file add the following
+In the `require` key inside the `composer.json` file add the following
 
 ```yml
     "mawelous/yamop-laravel": "dev-master"
 ```
 
-Run the Composer update command
+Save it and run the Composer update command
 
     $ composer update
 
