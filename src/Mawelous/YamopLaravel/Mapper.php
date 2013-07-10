@@ -66,13 +66,20 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	 */
 	protected function _getServer()
 	{
-		$config = \Config::get( 'database.mongo' );
-		
-		$server = 'mongodb://';
-		if ( isset( $config[ 'user' ] ) && !empty( $config[ 'user' ] ) ){
-			$server .= $config[ 'user' ] . ':' . $config[ 'password' ] .'@';
+		$databaseConfig = \Config::get( 'database.mongo.database' );
+		if( empty( $databaseConfig ) ){
+			throw new \Exception( 'Please set some database in config' );
 		}
-		$server .= $config[ 'host'] . ':' .$config[ 'port' ] . '/' . $config[ 'database' ];
+			
+		$server = 'mongodb://';
+		
+		$userConfig = \Config::get( 'database.mongo.user' );
+		if ( !empty( $userConfig ) ){
+			$server .= $userConfig . ':' . \Config::get( 'database.mongo.password' ) .'@';
+		}
+		$server .= \Config::get( 'database.mongo.host', '127.0.0.1' )
+			    . ':' .\Config::get( 'database.mongo.port', 27017 )
+				. '/' . \Config::get( 'database.mongo.database' );
 	
 		return $server;
 	}	
