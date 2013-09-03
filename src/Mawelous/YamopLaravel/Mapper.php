@@ -55,7 +55,10 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	protected function _getDatabase()
 	{
 		$config = \Config::get( 'database.mongo' );
-		$connection = new \MongoClient( $this->_getServer() );
+		$options = isset( $config[ 'options' ] ) ?
+		           $config[ 'options' ] :
+		           array();
+		$connection = new \MongoClient( $this->_getServer(), $options );		
 		return $connection->{$config[ 'database' ]};
 	}
 	
