@@ -31,22 +31,31 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	 * (non-PHPdoc)
 	 * @see \Mawelous\Yamop\Mapper::_createPaginator()
 	 */
-	protected function _createPaginator($results, $totalCount, $perPage)
+	protected function _createPaginator($results, $totalCount, $perPage, $page, $options)
 	{
-		return \Paginator::make( $results, $totalCount, $perPage );
+		if( $options ){
+			\Paginator::setPageName( $options );
+			$paginator =  \Paginator::make( $results, $totalCount, $perPage );
+			\Paginator::setPageName( 'page' );
+		} else {
+			$paginator =  \Paginator::make( $results, $totalCount, $perPage );
+		}
+		
+		return $paginator;
 	}
 	
 	/**
 	 * (non-PHPdoc)
 	 * @see \Mawelous\Yamop\Mapper::getPaginator()
 	 */
-	public function getPaginator( $perPage = 10, $page = null )
+	public function getPaginator( $perPage = 10, $page = null, $options = null )
 	{
 		if( $page == null ){
-			$page = (int)\Input::get( 'page', 1 );
+			$pageParamName = $options ?: 'page';  
+			$page = (int)\Input::get( $pageParamName, 1 );
 		}
 	
-		return parent::getPaginator( $page, $perPage );
+		return parent::getPaginator( $perPage, $page, $options );
 	}
 	
 	/**
