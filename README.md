@@ -91,7 +91,7 @@ For usage examples and further explanation take a look at the [Yamop Documentati
 <a name="pagination"></a>
 ## Pagination
 
-Yamop for Laravel supports pagination out of the box. It implements the `_createPaginator` method and extends `getPaginator`, with this you only need to pass the items per page into the method. The second parameter, the current page number, is optional.
+Yamop for Laravel supports pagination out of the box. It implements the `_createPaginator` method and extends `getPaginator`, with this you only need to pass the items per page into the method. The second parameter which is current page number and third which is page parameter name are optional.
 
 ```php
     User::getMapper()
@@ -102,7 +102,7 @@ Yamop for Laravel supports pagination out of the box. It implements the `_create
     //or
     User::getMapper()
         ->find()
-        ->getPaginator( $perPage, $currentPage );
+        ->getPaginator( $perPage, $currentPage, 'commentsPage' );
 ```
 
 <a name="authentication"></a>
