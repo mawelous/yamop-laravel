@@ -1,6 +1,8 @@
 # Yamop for Laravel
 ### Yet another MongoDB ODM for PHP as Laravel Component
 
+Documentation for version 0.2.0 
+
 - [What's that?](#whatsthat)
 - [Requirements](#requirements)
 - [Installation](#installation)
