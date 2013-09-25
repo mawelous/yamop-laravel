@@ -33,7 +33,7 @@ You can simply download it [here](https://github.com/mawelous/yamop-laravel) or 
 In the `require` key inside the `composer.json` file add the following
 
 ```yml
-    "mawelous/yamop-laravel": "dev-master"
+    "mawelous/yamop-laravel": "0.2.0"
 ```
 
 Save it and run the Composer update command
