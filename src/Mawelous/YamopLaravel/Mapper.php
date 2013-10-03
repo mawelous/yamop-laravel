@@ -21,7 +21,7 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	public function __construct( $modelClass = null, $fetchType = self::FETCH_OBJECT )
 	{
 		if( static::$_database == null ){
-			static::$_database = $this->_getDatabase();
+			static::$_database = array( $this->_getDatabase() );
 		}
 	
 		parent::__construct( $modelClass, $fetchType );
