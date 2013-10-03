@@ -21,7 +21,7 @@ class YamopLaravelServiceProvider extends ServiceProvider {
 		
 		$this->app['auth']->extend( 'yamop', function( $app ) {
 			$provider = new YamopLaravelUserProvider( $app[ 'hash' ], $app[ 'config' ]->get( 'auth.model' ) );
-			return new \Illuminate\Auth\Guard( $provider, $app[ 'session' ] );
+			return new \Illuminate\Auth\Guard( $provider, $app[ 'session.store' ] );
 		});		
 	}	
 
