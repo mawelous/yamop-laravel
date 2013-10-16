@@ -21,7 +21,7 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	public function __construct( $modelClass = null, $fetchType = self::FETCH_OBJECT )
 	{
 		if( static::$_database == null ){
-			static::$_database = array( $this->_getDatabase() );
+			static::$_database = $this->_getDatabases();
 		}
 	
 		parent::__construct( $modelClass, $fetchType );
@@ -59,39 +59,54 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	}
 	
 	/**
-	 * Connect to databse given in config
+	 * Connect to databses given in config
+	 * @return array Array od MongoDB
 	 */
-	protected function _getDatabase()
+	protected function _getDatabases()
 	{
-		$config = \Config::get( 'database.mongo' );
-		$options = isset( $config[ 'options' ] ) ?
-		           $config[ 'options' ] :
-		           array();
-		$connection = new \MongoClient( $this->_getServer(), $options );		
-		return $connection->{$config[ 'database' ]};
+		$baseConfigPath = 'database.mongo';
+		$config = \Config::get( $baseConfigPath );
+		
+		if( \Config::get( $baseConfigPath . '.database') ){
+			$options = \Config::get( $baseConfigPath . '.options', array() );
+			$connection = new \MongoClient( $this->_getServerString( $baseConfigPath ), $options );
+			$db = \Config::get( $baseConfigPath . '.database' );
+			return array ( 'default' => $connection->$db );
+		} else {
+			$connections = array();
+			foreach( $config as $key => $configPart ){
+				$configPath = $baseConfigPath . '.' . $key;
+				$options = \Config::get( $configPath . '.options', array() );
+				$connection = new \MongoClient( $this->_getServerString( $configPath ), $options );
+				$db = \Config::get( $configPath . '.database' );
+				$connections[ $key ] = $connection->$db;
+			}
+			return $connections;
+		}
 	}
 	
 	/**
 	 * Return server connection string build from config
 	 * 
+	 * @param string $path Config path to one database settings
 	 * @return string
 	 */
-	protected function _getServer()
+	protected function _getServerString( $path )
 	{
-		$databaseConfig = \Config::get( 'database.mongo.database' );
+		$databaseConfig = \Config::get( $path . '.database' );
 		if( empty( $databaseConfig ) ){
 			throw new \Exception( 'Please set some database in config' );
 		}
 			
 		$server = 'mongodb://';
 		
-		$userConfig = \Config::get( 'database.mongo.user' );
+		$userConfig = \Config::get( $path . '.user' );
 		if ( !empty( $userConfig ) ){
-			$server .= $userConfig . ':' . \Config::get( 'database.mongo.password' ) .'@';
+			$server .= $userConfig . ':' . \Config::get( $path . '.password' ) .'@';
 		}
-		$server .= \Config::get( 'database.mongo.host', '127.0.0.1' )
-			    . ':' .\Config::get( 'database.mongo.port', 27017 )
-				. '/' . \Config::get( 'database.mongo.database' );
+		$server .= \Config::get( $path . '.host', '127.0.0.1' )
+			    . ':' .\Config::get( $path . '.port', 27017 )
+				. '/' . $databaseConfig;
 	
 		return $server;
 	}	
