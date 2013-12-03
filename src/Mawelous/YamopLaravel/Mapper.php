@@ -18,7 +18,7 @@ class Mapper extends \Mawelous\Yamop\Mapper
 	 * @param string $modelClass
 	 * @param int $fetchType One of constants
 	 */
-	public function __construct( $modelClass = null, $fetchType = self::FETCH_OBJECT )
+	public function __construct( $modelClass = null, $fetchType = null )
 	{
 		if( static::$_database == null ){
 			static::$_database = $this->_getDatabases();
