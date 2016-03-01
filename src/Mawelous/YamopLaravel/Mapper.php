@@ -97,17 +97,29 @@ class Mapper extends \Mawelous\Yamop\Mapper
 		if( empty( $databaseConfig ) ){
 			throw new \Exception( 'Please set some database in config' );
 		}
-			
+
 		$server = 'mongodb://';
-		
+
 		$userConfig = \Config::get( $path . '.user' );
 		if ( !empty( $userConfig ) ){
 			$server .= $userConfig . ':' . \Config::get( $path . '.password' ) .'@';
 		}
-		$server .= \Config::get( $path . '.host', '127.0.0.1' )
-			    . ':' .\Config::get( $path . '.port', 27017 )
+		$hosts = \Config::get( $path . '.host', '127.0.0.1' );
+		$port = \Config::get( $path . '.port', 27017 );
+
+		if (!is_array($hosts)) {
+			$hosts = [$hosts];
+		}
+
+		// Add ports to hosts
+		foreach ($hosts as &$host)
+		{
+			$host = $host . ":" . $port;
+		}
+
+		$server .= implode(',', $hosts)
 				. '/' . $databaseConfig;
-	
+
 		return $server;
 	}	
 }
